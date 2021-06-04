@@ -6,13 +6,14 @@ module DataAnon
     module Logging
 
       def logger
-        @@logger ||= (self.logger = Logger.new(STDOUT) )
+        # We will assume that we are running under rails
+        ActiveRecord::Base.logger ||= (self.logger = Logger.new(STDOUT) )
       end
 
       def logger= logger
-        @@logger = logger
+        # We do not use @@logger
         ActiveRecord::Base.logger = logger
-        @@logger
+        logger
       end
 
     end
